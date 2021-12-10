@@ -24,9 +24,8 @@ class _AddItemWidgetState extends State<AddItemWidget> {
   String itemGenderValue;
   String uploadedFileUrl = '';
   TextEditingController itemNameController;
-  TextEditingController itemCategoryController1;
+  TextEditingController itemCategoryController;
   TextEditingController itemConditionController;
-  TextEditingController itemCategoryController2;
   TextEditingController itemColorController;
   TextEditingController itemPriceController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -34,10 +33,9 @@ class _AddItemWidgetState extends State<AddItemWidget> {
   @override
   void initState() {
     super.initState();
-    itemCategoryController1 = TextEditingController();
+    itemCategoryController = TextEditingController();
     itemNameController = TextEditingController();
     itemConditionController = TextEditingController();
-    itemCategoryController2 = TextEditingController();
     itemColorController = TextEditingController();
     itemPriceController = TextEditingController();
   }
@@ -215,7 +213,7 @@ class _AddItemWidgetState extends State<AddItemWidget> {
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(20, 6, 20, 0),
                       child: TextFormField(
-                        controller: itemCategoryController1,
+                        controller: itemCategoryController,
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Category of your item...',
@@ -307,58 +305,6 @@ class _AddItemWidgetState extends State<AddItemWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Condition of your item...',
-                          hintStyle: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Lexend Deca',
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                        ),
-                        style: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Lexend Deca',
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                    child: Text(
-                      'Category : ',
-                      style: FlutterFlowTheme.bodyText2.override(
-                        fontFamily: 'Lexend Deca',
-                        color: Color(0xFF95A1AC),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 6, 20, 0),
-                      child: TextFormField(
-                        controller: itemCategoryController2,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintText: 'Category of your item...',
                           hintStyle: FlutterFlowTheme.bodyText1.override(
                             fontFamily: 'Lexend Deca',
                           ),
@@ -507,7 +453,7 @@ class _AddItemWidgetState extends State<AddItemWidget> {
                       color: itemColorController.text,
                       price: double.parse(itemPriceController.text),
                       itemName: itemNameController.text,
-                      category: itemCategoryController2.text,
+                      category: itemCategoryController.text,
                     );
                     await ItemsRecord.collection.doc().set(itemsCreateData);
                     await Navigator.push(
