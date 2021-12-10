@@ -37,7 +37,7 @@ class _SignInWidgetState extends State<SignInWidget> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 1,
         decoration: BoxDecoration(
-          color: Color(0xFF3E1C1C),
+          color: Color(0xFF262D34),
         ),
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),

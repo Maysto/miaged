@@ -1,8 +1,11 @@
+import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../item_detail/item_detail_widget.dart';
 import '../profile_page/profile_page_widget.dart';
+import '../sign_in/sign_in_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,7 +28,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         backgroundColor: Color(0xFF482B92),
         automaticallyImplyLeading: false,
         title: Text(
-          'Miaged - Home Page',
+          'Miaged',
           style: FlutterFlowTheme.bodyText1.override(
             fontFamily: 'Poppins',
             color: Colors.white,
@@ -49,6 +52,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 MaterialPageRoute(
                   builder: (context) => ProfilePageWidget(),
                 ),
+              );
+            },
+          ),
+          FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30,
+            borderWidth: 1,
+            buttonSize: 60,
+            icon: FaIcon(
+              FontAwesomeIcons.running,
+              color: Colors.white,
+              size: 30,
+            ),
+            onPressed: () async {
+              await signOut();
+              await Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SignInWidget(),
+                ),
+                (r) => false,
               );
             },
           )
@@ -100,79 +124,65 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       );
                     }
                     final cardUsersRecord = snapshot.data;
-                    return Card(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: Color(0xFFF5F5F5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Image.network(
-                            listViewItemsRecord.photo,
-                            width: double.infinity,
-                            height: 300,
-                            fit: BoxFit.cover,
+                    return InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ItemDetailWidget(
+                              item: listViewItemsRecord.reference,
+                            ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                'Posted By: ',
-                                style: FlutterFlowTheme.bodyText1,
-                              ),
-                              Text(
-                                cardUsersRecord.displayName,
-                                style: FlutterFlowTheme.bodyText1,
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                'Category : ',
-                                style: FlutterFlowTheme.bodyText1,
-                              ),
-                              Text(
-                                listViewItemsRecord.category,
-                                style: FlutterFlowTheme.bodyText1,
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                'Gender : ',
-                                style: FlutterFlowTheme.bodyText1,
-                              ),
-                              Text(
-                                listViewItemsRecord.gender,
-                                style: FlutterFlowTheme.bodyText1,
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                'Price : ',
-                                style: FlutterFlowTheme.bodyText1,
-                              ),
-                              Text(
-                                formatNumber(
-                                  listViewItemsRecord.price,
-                                  formatType: FormatType.decimal,
-                                  decimalType: DecimalType.commaDecimal,
-                                  currency: '€',
+                        );
+                      },
+                      child: Card(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        color: Color(0xFFF5F5F5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Image.network(
+                              listViewItemsRecord.photo,
+                              width: double.infinity,
+                              height: 300,
+                              fit: BoxFit.cover,
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(
+                                  'Posted By: ',
+                                  style: FlutterFlowTheme.bodyText1,
                                 ),
-                                style: FlutterFlowTheme.bodyText1,
-                              )
-                            ],
-                          )
-                        ],
+                                Text(
+                                  cardUsersRecord.displayName,
+                                  style: FlutterFlowTheme.bodyText1,
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(
+                                  'Price : ',
+                                  style: FlutterFlowTheme.bodyText1,
+                                ),
+                                Text(
+                                  formatNumber(
+                                    listViewItemsRecord.price,
+                                    formatType: FormatType.decimal,
+                                    decimalType: DecimalType.commaDecimal,
+                                    currency: '€',
+                                  ),
+                                  style: FlutterFlowTheme.bodyText1,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },
