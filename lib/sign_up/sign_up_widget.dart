@@ -67,6 +67,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
                 final usersCreateData = createUsersRecordData(
                   email: emailAddressController.text,
+                  displayName: fullNameController.text,
                 );
                 await UsersRecord.collection
                     .doc(user.uid)
@@ -395,6 +396,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
                               final usersCreateData = createUsersRecordData(
                                 email: emailAddressController.text,
+                                displayName: fullNameController.text,
                               );
                               await UsersRecord.collection
                                   .doc(user.uid)
