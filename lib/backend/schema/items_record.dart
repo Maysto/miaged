@@ -35,6 +35,10 @@ abstract class ItemsRecord implements Built<ItemsRecord, ItemsRecordBuilder> {
   double get price;
 
   @nullable
+  @BuiltValueField(wireName: 'item_name')
+  String get itemName;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -44,7 +48,8 @@ abstract class ItemsRecord implements Built<ItemsRecord, ItemsRecordBuilder> {
     ..condition = ''
     ..photo = ''
     ..color = ''
-    ..price = 0.0;
+    ..price = 0.0
+    ..itemName = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('items');
@@ -72,6 +77,7 @@ Map<String, dynamic> createItemsRecordData({
   String photo,
   String color,
   double price,
+  String itemName,
 }) =>
     serializers.toFirestore(
         ItemsRecord.serializer,
@@ -83,4 +89,5 @@ Map<String, dynamic> createItemsRecordData({
           ..condition = condition
           ..photo = photo
           ..color = color
-          ..price = price));
+          ..price = price
+          ..itemName = itemName));

@@ -1,8 +1,13 @@
+import '../add_item/add_item_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../edit_profile/edit_profile_widget.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../sign_in/sign_in_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfilePageWidget extends StatefulWidget {
@@ -19,6 +24,57 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Color(0xFF5B33C7),
+        automaticallyImplyLeading: false,
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 60,
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () async {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          'Profile Page',
+          style: FlutterFlowTheme.title2.override(
+            fontFamily: 'Lexend Deca',
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        actions: [
+          FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30,
+            borderWidth: 1,
+            buttonSize: 60,
+            icon: FaIcon(
+              FontAwesomeIcons.running,
+              color: Colors.white,
+              size: 30,
+            ),
+            onPressed: () async {
+              await signOut();
+              await Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SignInWidget(),
+                ),
+                (r) => false,
+              );
+            },
+          )
+        ],
+        centerTitle: true,
+        elevation: 4,
+      ),
       backgroundColor: Color(0xFF262D34),
       body: AuthUserStreamWidget(
         child: StreamBuilder<List<UsersRecord>>(
@@ -52,11 +108,30 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  FlutterFlowIconButton(
+                    borderColor: Colors.transparent,
+                    borderRadius: 30,
+                    borderWidth: 1,
+                    buttonSize: 60,
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfileWidget(),
+                        ),
+                      );
+                    },
+                  ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
                     child: Card(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: Color(0xFF4B39EF),
+                      color: Color(0xFF5B33C7),
                       elevation: 2,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -205,77 +280,30 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(24, 4, 0, 8),
                               child: Text(
-                                'Selling Items :',
+                                'Sell an item :',
                                 style: FlutterFlowTheme.bodyText2.override(
                                   fontFamily: 'Poppins',
                                   color: Color(0xFF95A1AC),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: StreamBuilder<List<ItemsRecord>>(
-                                stream: queryItemsRecord(
-                                  queryBuilder: (itemsRecord) =>
-                                      itemsRecord.where('user',
-                                          isEqualTo:
-                                              columnUsersRecord.reference),
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50,
-                                        height: 50,
-                                        child: CircularProgressIndicator(
-                                          color: FlutterFlowTheme.primaryColor,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<ItemsRecord> listViewItemsRecordList =
-                                      snapshot.data;
-                                  return ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: listViewItemsRecordList.length,
-                                    itemBuilder: (context, listViewIndex) {
-                                      final listViewItemsRecord =
-                                          listViewItemsRecordList[
-                                              listViewIndex];
-                                      return Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 8),
-                                        child: Card(
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          color: Color(0xFFF5F5F5),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Image.network(
-                                                listViewItemsRecord.photo,
-                                                width: double.infinity,
-                                                height: 300,
-                                                fit: BoxFit.cover,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(70, 0, 0, 0),
+                              child: InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AddItemWidget(),
+                                    ),
                                   );
                                 },
+                                child: FaIcon(
+                                  FontAwesomeIcons.plusCircle,
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
                               ),
                             )
                           ],
