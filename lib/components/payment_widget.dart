@@ -78,7 +78,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                   ),
                 );
               },
-              text: 'Button',
+              text: 'ACHETER',
               options: FFButtonOptions(
                 width: 130,
                 height: 40,
